@@ -1,0 +1,51 @@
+1) SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE SP_MostraContravvenzioniPerAnno
+	@Anno varchar(4)
+AS
+BEGIN
+	SELECT *
+	FROM VERBALE
+	WHERE YEAR(DataViolazione) = @Anno
+END
+
+==========================================================
+
+2) SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE SP_TotPuntiDecurtatiPerData
+@Day varchar(2),
+@Month varchar(2),
+@Year varchar(4)
+AS
+BEGIN
+	SELECT sum(DecurtamentoPunti) as TotPuntiDecurtati
+	FROM VERBALE
+	WHERE DAY(DataViolazione) = @Day
+	AND MONTH(DataViolazione) = @Month
+	AND YEAR(Dataviolazione) = @Year
+END
+
+============================================================
+
+3) SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE PROCEDURE SP_EliminaVerbale
+@IDVerbale int
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DELETE FROM TabellaIntermedia
+	WHERE IDVerbale = @IDVerbale
+	DELETE FROM VERBALE
+	WHERE IDVerbale = @IDVerbale
+END

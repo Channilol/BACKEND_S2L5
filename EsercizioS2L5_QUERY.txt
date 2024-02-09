@@ -1,0 +1,90 @@
+1. SELECT count(IDVerbale)
+  FROM TabellaIntermedia
+
+2. SELECT a.Cognome, a.Nome, sum(verb.DecurtamentoPunti) as TotPuntiDecurtati, sum(verb.Importo) as TotImporto, count(ti.IDVerbale) as TotVerbali
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  GROUP BY ti.IDAnagrafica, a.Cognome, a.Nome
+
+3. SELECT viol.DescrizioneViolazione, count(verb.IDVerbale) as TotVerbali
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  GROUP BY viol.DescrizioneViolazione
+
+4. SELECT a.IDAnagrafica, a.Cognome, a.Nome, sum(verb.DecurtamentoPunti) as TotPuntiDecurtati
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  GROUP BY a.IDAnagrafica, a.Cognome, a.Nome
+
+5. SELECT a.Cognome, a.Nome, verb.DataViolazione, verb.IndirizzoViolazione, verb.Importo, verb.DecurtamentoPunti
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  WHERE a.Citta = 'Palermo'
+
+6. SELECT a.Cognome, a.Nome, verb.DataViolazione, verb.IndirizzoViolazione, verb.Importo, verb.DecurtamentoPunti
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  WHERE verb.DataViolazione between '01/02/2009' and '31/07/2009'
+
+7. SELECT a.Cognome, a.Nome, sum(verb.Importo) as TotImporto
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  GROUP BY a.Cognome, a.Nome
+
+8. SELECT a.*
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  WHERE Citta = 'Palermo'
+
+9. SELECT verb.DataViolazione, verb.Importo, verb.DecurtamentoPunti
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  WHERE Year(verb.DataViolazione) = '2009'
+
+10. SELECT ag.CognomeAgente, ag.NomeAgente, count(verb.IDVerbale) as VerbaliScritti
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  GROUP BY ag.CognomeAgente, ag.NomeAgente
+
+11. SELECT a.Cognome, a.Nome, a.Indirizzo, verb.DataViolazione, verb.Importo, verb.DecurtamentoPunti
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  WHERE verb.DecurtamentoPunti > 5
+
+12. SELECT a.Cognome, a.Nome, a.Indirizzo, verb.DataViolazione, verb.Importo, verb.DecurtamentoPunti
+  FROM TabellaIntermedia ti
+  LEFT JOIN ANAGRAFE a ON ti.IDAnagrafica = a.IDAnagrafica
+  LEFT JOIN VERBALE verb on ti.IDVerbale = verb.IDVerbale
+  LEFT JOIN VIOLAZIONE viol on ti.IDViolazione = viol.IDViolazione
+  LEFT JOIN AGENTE ag on verb.IDAgente = ag.IDAgente
+  WHERE verb.Importo > 400
